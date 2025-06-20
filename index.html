@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Benimle Çıkar Mısın?</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      background: linear-gradient(to bottom right, #ffd6d6, #ffeaea);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 100vh;
+      font-family: 'Segoe UI', sans-serif;
+      text-align: center;
+      overflow: hidden;
+      position: relative;
+    }
+
+    h1 {
+      font-size: 2em;
+      color: #333;
+      margin-bottom: 40px;
+    }
+
+    .btn-container {
+      display: flex;
+      gap: 20px;
+      position: relative;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    button {
+      padding: 15px 30px;
+      font-size: 18px;
+      border: none;
+      border-radius: 12px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+      z-index: 1;
+    }
+
+    #yes {
+      background-color: #ff69b4;
+      color: white;
+    }
+
+    #no {
+      background-color: #808080;
+      color: white;
+      position: absolute;
+    }
+
+    .heart {
+      position: absolute;
+      font-size: 30px;
+      animation: float 2s linear forwards;
+      pointer-events: none;
+    }
+
+    @keyframes float {
+      0% {
+        transform: translateY(0);
+        opacity: 1;
+      }
+      100% {
+        transform: translateY(-200px);
+        opacity: 0;
+      }
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 1.5em;
+      }
+
+      button {
+        font-size: 16px;
+        padding: 12px 24px;
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <h1>Benimle çıkar mısın? 🥺</h1>
+  <div class="btn-container">
+    <button id="yes">Evet ❤️</button>
+    <button id="no">Hayır 💔</button>
+  </div>
+
+  <script>
+    const noButton = document.getElementById('no');
+    const yesButton = document.getElementById('yes');
+
+    // Hayır butonu kaçıyor
+    function moveButton() {
+      const maxX = window.innerWidth - noButton.offsetWidth - 30;
+      const maxY = window.innerHeight - noButton.offsetHeight - 100;
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+      noButton.style.left = `${x}px`;
+      noButton.style.top = `${y}px`;
+    }
+
+    noButton.addEventListener('mouseenter', moveButton);
+    noButton.addEventListener('touchstart', moveButton);
+
+    // Kalpler oluştur
+    function createHearts() {
+      for (let i = 0; i < 20; i++) {
+        const heart = document.createElement('div');
+        heart.classList.add('heart');
+        heart.innerText = '💖';
+        heart.style.left = Math.random() * window.innerWidth + 'px';
+        heart.style.top = Math.random() * window.innerHeight + 'px';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 2000);
+      }
+    }
+
+    // Evet'e tıklanınca
+    yesButton.addEventListener('click', () => {
+      document.body.innerHTML = "<h1>Yaaa çok mutluyum! 😍💖</h1>";
+      createHearts();
+    });
+  </script>
+
+</body>
+</html>
