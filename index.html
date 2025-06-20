@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Benimle Çıkar Mısın?</title>
+  <title>Süpriz</title>
   <style>
     * {
       margin: 0;
@@ -47,11 +47,13 @@
       transition: all 0.3s ease;
       box-shadow: 0 4px 8px rgba(0,0,0,0.2);
       z-index: 1;
+      user-select: none;
     }
 
     #yes {
       background-color: #ff69b4;
       color: white;
+      transform-origin: center;
     }
 
     #no {
@@ -60,11 +62,12 @@
       position: absolute;
     }
 
-    .heart {
+    .emoji {
       position: absolute;
       font-size: 30px;
       animation: float 2s linear forwards;
       pointer-events: none;
+      user-select: none;
     }
 
     @keyframes float {
@@ -92,7 +95,7 @@
 </head>
 <body>
 
-  <h1>Benimle çıkar mısın? 🥺</h1>
+  <h1>Benimle çıkar mısın? </h1>
   <div class="btn-container">
     <button id="yes">Evet ❤️</button>
     <button id="no">Hayır 💔</button>
@@ -102,7 +105,9 @@
     const noButton = document.getElementById('no');
     const yesButton = document.getElementById('yes');
 
-    // Hayır butonu kaçıyor
+    let yesScale = 1;
+
+    // "Hayır" butonu kaçıyor ve "Evet" butonu büyüyor
     function moveButton() {
       const maxX = window.innerWidth - noButton.offsetWidth - 30;
       const maxY = window.innerHeight - noButton.offsetHeight - 100;
@@ -110,28 +115,32 @@
       const y = Math.random() * maxY;
       noButton.style.left = `${x}px`;
       noButton.style.top = `${y}px`;
+
+      // Evet butonunu biraz büyüt
+      yesScale += 0.1;
+      yesButton.style.transform = `scale(${yesScale})`;
     }
 
     noButton.addEventListener('mouseenter', moveButton);
     noButton.addEventListener('touchstart', moveButton);
 
-    // Kalpler oluştur
-    function createHearts() {
-      for (let i = 0; i < 20; i++) {
-        const heart = document.createElement('div');
-        heart.classList.add('heart');
-        heart.innerText = '💖';
-        heart.style.left = Math.random() * window.innerWidth + 'px';
-        heart.style.top = Math.random() * window.innerHeight + 'px';
-        document.body.appendChild(heart);
-        setTimeout(() => heart.remove(), 2000);
+    // Uçan emojiler oluştur
+    function createEmojis() {
+      const emojis = ['💖', '✨', '🌟', '😍'];
+      for (let i = 0; i < 25; i++) {
+        const emoji = document.createElement('div');
+        emoji.classList.add('emoji');
+        emoji.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+        emoji.style.left = Math.random() * window.innerWidth + 'px';
+        emoji.style.top = Math.random() * window.innerHeight + 'px';
+        document.body.appendChild(emoji);
+        setTimeout(() => emoji.remove(), 2000);
       }
     }
 
-    // Evet'e tıklanınca
     yesButton.addEventListener('click', () => {
-      document.body.innerHTML = "<h1>Yaaa çok mutluyum! 😍💖</h1>";
-      createHearts();
+      document.body.innerHTML = "<h1>Yeşil gözlerin, baharın en güzel çiçekleri gibi içimi ısıtıyor.💖</h1>";
+      createEmojis();
     });
   </script>
 
